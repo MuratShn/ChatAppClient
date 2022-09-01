@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserLoginResponse } from 'src/app/models/UserLoginResponse';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -60,12 +61,24 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(){
+  async login(){
     if(this.loginForm.valid){
   
       let loginForm = Object.assign({},this.loginForm.value)
       console.log(loginForm)
-      this.userService.login(loginForm,()=>{console.log("Başarılı")},errorMessage=>{console.log(errorMessage)})
+      let result:UserLoginResponse = await this.userService.login(loginForm,
+        ()=>{},
+        errorMessage=>{console.log(errorMessage)})
+
+        console.log(result)
+
+        if(result.message == null){
+          localStorage.setItem("_T",result.accessToken.token)
+        }
+        else{
+          console.log(result.message)
+        }
+
     }
   }
 }

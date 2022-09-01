@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { GetUserInfoResponse } from 'src/app/models/GetUserInfoResponse';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private readonly userService:UserService,
+    private readonly spinner:NgxSpinnerService
+    ) { }
 
-  ngOnInit(): void {
+  userDetail:GetUserInfoResponse = null as any
+
+  async ngOnInit(){
+    this.spinner.show();
+    this.userDetail = await this.userService.getUserInfo(
+      ()=>this.spinner.hide()
+      );
+    console.log(this.userDetail)
   }
-
+  
 }
+
