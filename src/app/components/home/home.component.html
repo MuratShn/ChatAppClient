@@ -2,25 +2,6 @@
     *{
         color: white;
     }
-    .message{
-        margin-top: 5px;
-        margin-bottom:  5px;
-        display: block;
-    }
-    .message div{
-        display: inline-block;
-        padding: 7px;
-        padding-left: 20px;
-        border-radius: 20px;
-        font-size: 15px;
-        background-color: #005c4b;
-        text-align: left;
-        
-    }
-    .message-time{
-        margin-left:20px;
-        font-size:10px;
-    }
     .Chat-Groups{
         height: 70px;
         background-color: #111b21;
@@ -54,92 +35,68 @@
 
 
 <div class="row" style="height: 100vh;">
-    <br><br><br><br><br><br>
-        <div class="col-md-4" style="background-color: red;">
-            <div class="row">
-                <div style="background-color: #202c33;">
-                    <div style="padding: 5px 16px;height: 59px;">
-                        <img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 45px;" alt=""> <span *ngIf="userDetail">{{userDetail.userName}}</span> 
-                    </div> 
-                </div>
-                <div>
-                    <div class="row Chat-Groups">
-
-                        <div class="col-2">
-                            <!-- <img *ngIf="item.ChatPhoto != null" src="item.ChatPhoto "  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt="">  Bunun ayarlaması yapılacak--> 
-                            <!-- <img *ngIf="item.ChatPhoto == null" src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt=""> -->
-                        </div>
-
-                        <div class="col-8">
-                            <div class="row Content">
-                                <div class="row Group-Name">TAYFA</div>
-                                <div class="row Group-LastMessage">Buda Son Mesaj Aq</div>
-                            </div>
-                        </div>
-
-                        <div class="col-2 Group-LastDate">
-                            16:25
-                            <br>
-                            <!-- 1  okunmamıs mesaj adedı--> 
-                        </div>
-
-                        <hr>
-
-                    </div>
+  
+    <div class="col-md-4" style="background-color: red;">
                     
-                    <div class="row Chat-Groups">
-                        <div class="col-2"><img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt=""></div>
-                        <div class="col-8">
-                            <div class="row Content">
-                                <div class="row Group-Name">Tayfa Katliam</div>
-                                <div class="row Group-LastMessage">Hasta olmuş hala ne  alakası var diyor 😄</div>
-                            </div>
-                        </div>
-                        <div class="col-2 Group-LastDate">
-                            16:25
-                            <br>
-                            <!-- 1  okunmamıs mesaj adedı--> 
-                        </div>
-                        <hr>
+        <div class="row">
+            <div style="background-color: #202c33;">
+                <div style="padding: 5px 16px;height: 59px;">
+                    <img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 45px;" alt=""> <span *ngIf="userDetail">{{userDetail.userName}}</span> 
+                </div> 
+            </div>
+            <div *ngIf="chatGroup">
+
+                <div class="row Chat-Groups"  routerLink="chat/{{item.id}}" style="cursor: pointer;" *ngFor="let item of chatGroup.chatGroupDetails">
+                    <div class="col-2">
+                        <img *ngIf="item.chatPhoto != null" src="item.ChatPhoto "  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt="">
+                        <img *ngIf="item.chatPhoto == null" src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt="">
                     </div>
 
-                    <div class="row Chat-Groups">
-                        <div class="col-2"><img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt=""></div>
-                        <div class="col-8">
-                            <div class="row Content">
-                                <div class="row Group-Name">Tayfa Katliam</div>
-                                <div class="row Group-LastMessage">Hasta olmuş hala ne  alakası var diyor 😄</div>
-                            </div>
+                    <div class="col-8">
+                        <div class="row Content">
+                            <div class="row Group-Name">{{item.chatName}}</div>
+                            <div class="row Group-LastMessage">{{item.lastMessage}}</div>
                         </div>
-                        <div class="col-2 Group-LastDate">
-                            16:25
-                            <br>
-                            <!-- 1  okunmamıs mesaj adedı--> 
-                        </div>
-                        <hr>
                     </div>
+
+                    <div class="col-2 Group-LastDate">
+                        16:25
+                        <br>
+                        <!-- 1  okunmamıs mesaj adedı--> 
+                    </div>
+
+                    <hr>
 
                 </div>
-            </div>    
-        </div>
-    <div class="col-md-8" style="background-color: blue;">
-        <div class="row">
+                
+                <div class="row Chat-Groups">
+                    <div class="col-2"><img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt=""></div>
+                    <div class="col-8">
+                        <div class="row Content">
+                            <div class="row Group-Name">Tayfa Katliam</div>
+                            <div class="row Group-LastMessage">Hasta olmuş hala ne  alakası var diyor 😄</div>
+                        </div>
+                    </div>
+                    <div class="col-2 Group-LastDate">
+                        16:25
+                        <br>
+                        <!-- 1  okunmamıs mesaj adedı--> 
+                    </div>
+                    <hr>
+                </div>
 
-            <div style="background-color: #202c33;">
-                <div style="padding: 10px 16px;height: 59px;">Diğer Kullanıcının/Grubun Fotograf Kullanıcı adı vs</div> 
             </div>
-
-            <div class="messages" style="padding-left:80px;padding-right: 80px;">
-
-                <div class="message"><div> <span >Murat</span> Merhaba 1 <span class="message-time">20:55</span></div></div>
-                <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div> </div>
-                <div class="message"> <div>Naber 1 <span class="message-time">20:55</span></div> </div>
-                <div class="message"> <div>Nasıl Gidyor 1 <span class="message-time">20:55</span></div> </div>
-                <div class="message"><div>Merhaba 1 <span class="message-time">20:55</span></div></div>
-                <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div> </div>
-
-            </div>
-
         </div>    
+
     </div>
-</div>
+  
+  
+    <div class="col-md-8" style="background-color: blue;">
+   
+            <router-outlet></router-outlet> <!--Mesahlar kısmı-->
+    </div>
+  
+  </div>
+  
+  
+

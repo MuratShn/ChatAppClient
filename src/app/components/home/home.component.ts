@@ -19,19 +19,19 @@ export class HomeComponent implements OnInit {
     ) { }
 
   userDetail:GetUserInfoResponse = null as any
-  test : GetMyChatGroupDetailResponse[] = []
+  chatGroup : GetMyChatGroupDetailResponse = null as any
 
 
   async ngOnInit(){
     this.spinner.show();
 
-    this.test = await this.chatGroupService.getMyChatGroups();
+    this.chatGroup = await this.chatGroupService.getMyChatGroups(()=>({}),()=>({}));
 
     this.userDetail = await this.userService.getUserInfo(
       ()=>this.spinner.hide()
       );
     console.log(this.userDetail)
-    console.log(this.test)
+    console.log(this.chatGroup)
   }
   
 }

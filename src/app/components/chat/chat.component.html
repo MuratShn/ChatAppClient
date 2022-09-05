@@ -1,0 +1,90 @@
+<style>
+       .message{
+        margin-top: 5px;
+        margin-bottom:  5px;
+        display: block;
+    }
+    .message div{
+        display: inline-block;
+        padding: 7px;
+        padding-left: 20px;
+        border-radius: 20px;
+        font-size: 15px;
+        background-color: #005c4b;
+        text-align: left;
+        
+    }
+    .message-time{
+        margin-left:20px;
+        font-size:10px;
+    }
+    .sendMessage{
+        position: fixed;
+        bottom: 0;
+        background-color: #202c33;
+        width: 53.4%;
+        height: 50px;
+        margin-bottom: 5px;
+    }
+    .sendMessage input{
+        color: white;
+        font-size: 13px;
+        height: 100%;
+    }
+
+
+</style>
+
+<div class="row" id="chatComponent" style="height: 100%;">
+    
+    <div *ngIf="ChatGroupDetail">
+
+        <div class="row" style="background-color: #202c33;">
+            <div style="padding: 10px 16px;height: 59px;">
+                    <img *ngIf="ChatGroupDetail.chatPhoto == null" src="../../../assets/UserPhoto-removebg-preview.png "  style="height: 55px;margin-top: -10px;margin-left: -14px;" alt="">   
+                    <!-- <img *ngIf="ChatGroupDetail.chatPhoto != null" src=ChatGroupDetail.chatPhoto  style="height: 55px;margin-top: -10px;margin-left: -14px;" alt="">    -->
+                    <span>{{ChatGroupDetail.chatName}}</span>             
+                    <span style="float: right;font-size:34px;margin-top:-15px">...</span>
+            </div> 
+        </div>
+
+        <div class="messages" *ngIf="Messages" style="padding-left:20px;padding-right: 20px;">
+
+            <div  *ngFor="let item of Messages.messages">
+
+                <div class="message" style="text-align: right;"> <!--Benim Mesajlar-->
+
+                    <div *ngIf="item.senderUserName == Messages.myUserName"> 
+                        <span>{{item.senderUserName}}</span> {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span>
+                    </div>
+
+                </div>
+
+                <div class="message"><!--Diğer Kişilerin Mesajlar-->
+                    <div *ngIf="item.senderUserName != Messages.myUserName"> 
+                        <span>{{item.senderUserName}}</span> {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span> 
+                    </div>
+                </div>
+
+            </div>
+
+                        <!-- <div class="message"><div> <span >Murat</span> Merhaba 1 <span class="message-time">20:55</span></div></div>
+                        <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div></div>
+                        <div class="message"> <div>Naber 1 <span class="message-time">20:55</span></div> </div>
+                        <div class="message"> <div>Nasıl Gidyor 1 <span class="message-time">20:55</span></div> </div>
+                        <div class="message"><div>Merhaba 1 <span class="message-time">20:55</span></div></div>
+                        <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div></div>  
+                        -->
+        
+        </div>
+
+    </div>
+            
+    <div class="sendMessage" >
+        <div class="row">
+            <div class="col-11"><input type="text" class="form-control" style="margin-top: 0.7%; background-color: #2a3942;"></div>
+            <div class="col-1" style="margin: auto;text-align:center ;"><span style="color: #8696a0;"> <i class="fa-solid fa-arrow-right"></i> </span></div>
+        </div>
+    </div>
+
+</div>

@@ -10,6 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorInterceptor } from './Interceptors/http-interceptor.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ChatComponent } from './components/chat/chat.component';
+import { DefaultMessageComponent } from './components/default-message/default-message.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -17,6 +20,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppComponent,
     LoginComponent,
     HomeComponent,
+    ChatComponent,
+    DefaultMessageComponent,
   ],
   imports: [
     HttpClientModule,
@@ -24,6 +29,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    FontAwesomeModule,
     NgxSpinnerModule.forRoot({type:"ball-scale-multiple"}),
     
   ],

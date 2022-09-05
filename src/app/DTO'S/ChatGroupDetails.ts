@@ -1,8 +1,8 @@
-// export interface ChatGroupDetails{
-//     Id:string
-//     ChatName:string
-//     ChatDescription:string
-//     ChatPhoto:string
-//     LastMessage:string
-//     LastMessageDate:string
-// }
+export interface ChatGroupDetails{
+    id:string
+    chatName:string
+    chatDescription:string
+    chatPhoto:string
+    lastMessage:string
+    lastMessageDate:string
+}
