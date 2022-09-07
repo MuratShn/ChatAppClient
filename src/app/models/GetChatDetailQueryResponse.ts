@@ -6,5 +6,5 @@ export interface GetChatDetailQueryResponse{
     createdUser:string
     chatDescription:string
     chatPhoto:string
-    UserGroupDetail:UsersGroupDetailDto[]
+    usersDetail:UsersGroupDetailDto[]
 }

@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit {
   chatId:string|null="";
   ChatGroupDetail:GetChatDetailQueryResponse = null as any
   Messages : GetMessagesQueryResponse = null as any
+  MyUserName : string = ""
   
 
   constructor(
@@ -33,6 +34,7 @@ export class ChatComponent implements OnInit {
       this.getMessages(this.chatId!);
     }) 
     console.log("test")
+    console.log(this.ChatGroupDetail)
   }
 
   async getGroupDetail(id:string){
@@ -50,7 +52,7 @@ export class ChatComponent implements OnInit {
     });
 
     this.Messages.messages.sort(x=>x.messageTime)
-    
+    this.MyUserName = this.Messages.myUserName;
   }
   
   async sendMessage(){

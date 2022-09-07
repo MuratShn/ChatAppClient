@@ -36,7 +36,13 @@
         padding: 4px;
         border-radius: 4px;
     }
-
+    .modal-content{
+        background-color: #202c33;
+    }
+    ul li{
+        color: white;
+        background-color: #202c33;
+        }
 
 </style>
 
@@ -46,9 +52,11 @@
 
         <div class="row" style="background-color: #202c33;">
             <div style="padding: 10px 16px;height: 59px;">
+                <div style="cursor: pointer;display:inline" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                     <img *ngIf="ChatGroupDetail.chatPhoto == null" src="../../../assets/UserPhoto-removebg-preview.png "  style="height: 55px;margin-top: -10px;margin-left: -14px;" alt="">   
                     <!-- <img *ngIf="ChatGroupDetail.chatPhoto != null" src=ChatGroupDetail.chatPhoto  style="height: 55px;margin-top: -10px;margin-left: -14px;" alt="">    -->
                     <span>{{ChatGroupDetail.chatName}}</span>             
+                </div>
                     <span style="float: right;font-size:34px;margin-top:-15px">...</span>
             </div> 
         </div>
@@ -99,3 +107,49 @@
         </div>
     </div>
 </div>
+
+
+<!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true" *ngIf="ChatGroupDetail">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          
+          <div class="row">
+            
+            <img *ngIf="ChatGroupDetail.chatPhoto != null" style="height: 250px;" src="{{ChatGroupDetail.chatPhoto}} " alt="">
+            <img *ngIf="ChatGroupDetail.chatPhoto == null" style="height: 250px;" src="../../../assets/UserPhoto-removebg-preview.png " alt="">
+
+          </div>
+          <div class="row" style="height: 40%;">
+            <div style="text-align: center;">Grup Açıklaması : <strong>{{ChatGroupDetail.chatDescription}}</strong> </div>
+          </div>
+          <br>
+          <div class="row" style="height: 40%;">
+            <div>{{ChatGroupDetail.usersDetail.length}} Katılımcı</div>
+            <hr>
+            <div>Yönetici : <strong> {{ChatGroupDetail.createdUser}}</strong> </div>
+
+            <ul class="list-group list-group-flush" *ngIf="MyUserName  == ChatGroupDetail.createdUser">
+                <ng-template ngFor let-item [ngForOf]="ChatGroupDetail.usersDetail">
+                    <li class="list-group-item" *ngIf="item.userName != ChatGroupDetail.createdUser "> {{item.userName}}  <span style="margin-left: 40px;font-size: 12px;cursor: pointer;">Gruptan At <i class="fa-solid fa-x"></i></span>  </li>
+                </ng-template>
+            </ul>
+
+            <ul class="list-group list-group-flush" *ngIf="MyUserName  != ChatGroupDetail.createdUser">
+                <ng-template ngFor let-item [ngForOf]="ChatGroupDetail.usersDetail">
+                        <li class="list-group-item" *ngIf="item.userName != ChatGroupDetail.createdUser "> 
+                            {{item.userName}}
+                        </li>
+                </ng-template>
+            
+            </ul>
+
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>

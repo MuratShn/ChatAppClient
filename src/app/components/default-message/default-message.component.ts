@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SignalRService } from 'src/app/services/signal-r.service';
 
 @Component({
   selector: 'app-default-message',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DefaultMessageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private readonly signalRService:SignalRService) { }
 
   ngOnInit(): void {
+    this.signalRService.start();
   }
 
 }
