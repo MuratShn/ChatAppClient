@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { UserLoginResponse } from 'src/app/models/UserLoginResponse';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,7 +14,9 @@ export class LoginComponent implements OnInit {
 
   constructor( 
     private formBuilder:FormBuilder,
-    private readonly userService:UserService
+    private readonly userService:UserService,
+    private readonly spinner:NgxSpinnerService,
+    private readonly router:Router
     ) { }
 
   registerForm! : FormGroup;
@@ -65,15 +69,21 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid){
   
       let loginForm = Object.assign({},this.loginForm.value)
-      console.log(loginForm)
+      
+      this.spinner.show();
+      
       let result:UserLoginResponse = await this.userService.login(loginForm,
-        ()=>{},
+        ()=>{
+          this.spinner.hide()
+        },
         errorMessage=>{console.log(errorMessage)})
 
         console.log(result)
 
         if(result.message == null){
           localStorage.setItem("_T",result.accessToken.token)
+          this.router.navigate(["/"])
+          
         }
         else{
           console.log(result.message)

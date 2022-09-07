@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { COMPILER_OPTIONS, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetMessagesDto } from 'src/app/DTO\'S/GetMessagesDto';
+import { AddMessageCommandResponse } from 'src/app/models/AddMessageCommandResponse';
 import { GetChatDetailQueryResponse } from 'src/app/models/GetChatDetailQueryResponse';
 import { GetMessagesQueryResponse } from 'src/app/models/GetMessagesQueryResponse';
 import { GetMyChatGroupDetailResponse } from 'src/app/models/GetMyChatGroupDetailResponse';
@@ -14,9 +15,10 @@ import { MessageService } from 'src/app/services/message.service';
 })
 export class ChatComponent implements OnInit {
 
-  id:string|null="";
+  chatId:string|null="";
   ChatGroupDetail:GetChatDetailQueryResponse = null as any
   Messages : GetMessagesQueryResponse = null as any
+  
 
   constructor(
     private readonly route:ActivatedRoute,
@@ -26,9 +28,9 @@ export class ChatComponent implements OnInit {
 
   async ngOnInit() {
     this.route.params.subscribe(x=>{
-      this.id = x["id"]
-      this.getGroupDetail(this.id!)
-      this.getMessages(this.id!);
+      this.chatId = x["id"]
+      this.getGroupDetail(this.chatId!)
+      this.getMessages(this.chatId!);
     }) 
     console.log("test")
   }
@@ -49,6 +51,22 @@ export class ChatComponent implements OnInit {
 
     this.Messages.messages.sort(x=>x.messageTime)
     
+  }
+  
+  async sendMessage(){
+    let message = document.querySelector("#message") as HTMLInputElement
+    
+    if(message.value.length > 0){
+      console.log(this.chatId,message.value)
+      let result : AddMessageCommandResponse = await this.messageService.addMessage(this.chatId!,message.value,()=>{},()=>{})
+      
+      if(!result.isSucceded){
+        console.log(result.message)
+      }
+      message.value = ""
+      console.log("mesaj yolandi")
+    }
+
   }
 
 }

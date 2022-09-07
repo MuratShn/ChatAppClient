@@ -31,6 +31,11 @@
         font-size: 13px;
         height: 100%;
     }
+    .userName{
+        background-color: red;
+        padding: 4px;
+        border-radius: 4px;
+    }
 
 
 </style>
@@ -55,14 +60,14 @@
                 <div class="message" style="text-align: right;"> <!--Benim Mesajlar-->
 
                     <div *ngIf="item.senderUserName == Messages.myUserName"> 
-                        <span>{{item.senderUserName}}</span> {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span>
+                        {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span>
                     </div>
 
                 </div>
 
                 <div class="message"><!--Diğer Kişilerin Mesajlar-->
                     <div *ngIf="item.senderUserName != Messages.myUserName"> 
-                        <span>{{item.senderUserName}}</span> {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span> 
+                        <span class="userName">{{item.senderUserName}}</span> {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span> 
                     </div>
                 </div>
 
@@ -82,9 +87,15 @@
             
     <div class="sendMessage" >
         <div class="row">
-            <div class="col-11"><input type="text" class="form-control" style="margin-top: 0.7%; background-color: #2a3942;"></div>
-            <div class="col-1" style="margin: auto;text-align:center ;"><span style="color: #8696a0;"> <i class="fa-solid fa-arrow-right"></i> </span></div>
+        
+            <div class="col-11">
+                <input type="text" id="message" (keydown.enter)="sendMessage()" class="form-control" style="margin-top: 0.7%; background-color: #2a3942;">
+            </div>
+            
+            <div class="col-1" (click)="sendMessage()"  style="margin: auto;text-align:center;cursor: pointer;">
+                <span style="color: #8696a0;"> <i class="fa-solid fa-arrow-right"></i> </span>
+            </div>
+        
         </div>
     </div>
-
 </div>

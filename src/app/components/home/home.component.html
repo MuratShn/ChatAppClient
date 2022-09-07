@@ -30,18 +30,48 @@
         padding-top: 15px;
         text-align: center;
     }
-    
+    .dropdown-item:hover {
+        background-color: #182229;
+        color: white;
+    }
+    ul li {
+        cursor: pointer;
+    }
+    .modal-content{
+        background-color: #202c33;
+    }
+    input{
+        color: black;
+    }   
+    textarea{
+        color: black;
+    }
 </style>
 
 
 <div class="row" style="height: 100vh;">
   
-    <div class="col-md-4" style="background-color: red;">
+    <div class="col-md-4">
                     
         <div class="row">
             <div style="background-color: #202c33;">
                 <div style="padding: 5px 16px;height: 59px;">
-                    <img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 45px;" alt=""> <span *ngIf="userDetail">{{userDetail.userName}}</span> 
+                    <img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 45px;" alt=""> 
+                    <span *ngIf="userDetail">{{userDetail.userName}}</span>
+
+                    <div class="dropdown" style="display: inline;" >
+
+                        <span class="" style="padding-top: 0.7em;float:right;cursor: pointer;"  data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </span>
+
+                        <ul class="dropdown-menu" style="background-color: #233138;">
+                            <li><span class="dropdown-item">Profil</span></li>
+                            <li><span class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal">Yeni Grup</span></li>
+                            <li><span class="dropdown-item">Çıkış</span></li>
+                        </ul>
+                      </div>
+
                 </div> 
             </div>
             <div *ngIf="chatGroup">
@@ -91,7 +121,7 @@
     </div>
   
   
-    <div class="col-md-8" style="background-color: blue;">
+    <div class="col-md-8" >
    
             <router-outlet></router-outlet> <!--Mesahlar kısmı-->
     </div>
@@ -99,4 +129,56 @@
   </div>
   
   
+  <!-- Button trigger modal -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form [formGroup]="addGroupForm">
 
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Yeni Grup Oluştur</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    <div class="row mb-4">
+                    <div class="col" style="text-align: center;">
+                        Grup Fotoğrafı
+                        <div class="form-group">
+                            <input type="file" formControlName="groupPhoto"groupName style="color: white;" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                        
+                    </div>
+                    </div>
+                
+                    <!-- Text input -->
+                    <div class="form-outline mb-4">
+                    <label class="form-label" for="form6Example3">Grup Adı</label>
+                    <input type="text" id="form6Example3" formControlName="groupName" class="form-control" />
+                    </div>
+                
+                    <!-- Text input -->
+                    <div class="form-outline mb-4">
+                    <label class="form-label" for="form6Example4">Grup Açıklaması</label>
+                    <input type="text" id="form6Example4" formControlName="groupDescription" class="form-control" />
+                    </div>
+                
+                
+                    <!-- Message input -->
+                    <div class="form-outline mb-4">
+                    <label class="form-label" for="form6Example7">Grup Kullanıcılarının Kullanıcı Adları</label>
+                    <textarea class="form-control" formControlName="groupUsers" id="form6Example7" placeholder="Lütfen , ile ayırınız => Murat_,Ahmet61," rows="4"></textarea>
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            <button type="submit" class="btn btn-primary" (click)="addGroup()">Grubu Oluştur</button>
+            </div>
+        </div>
+        </div>
+    </form>
+  </div>

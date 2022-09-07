@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { GetMyChatGroupDetailResponse } from '../models/GetMyChatGroupDetailResponse';
 import { GetChatDetailQueryResponse } from '../models/GetChatDetailQueryResponse';
+import { FormGroup } from '@angular/forms';
+import { AddMessageCommandResponse } from '../models/AddMessageCommandResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +25,7 @@ export class ChatGroupService {
 
     return await data
   }
+
   async getGroupDetail(id:string,successCallBack?:()=>void,errorCallBack?:(message:string)=>void){
     let newPath = this.baseUrl + "Chat/getChatDetail"
 
@@ -31,6 +34,17 @@ export class ChatGroupService {
     data
     .then((x:any) => successCallBack!())
     .catch((error:HttpErrorResponse) => errorCallBack!(error.message))
+
+    return await data
+  }
+
+  async addGroup(form:FormGroup,successCallBack?:()=>void,errorCallBack?:(message:string)=>void):Promise<AddMessageCommandResponse>{
+    let newUrl = this.baseUrl + "Chat/addChat"
+    let data : Promise<AddMessageCommandResponse> | any = this.httpClient.post<AddMessageCommandResponse>(newUrl,form).toPromise();
+
+    data
+    .then((x:any)=>successCallBack!())
+    .catch((error:HttpErrorResponse)=>errorCallBack!(error.message));
 
     return await data
   }
