@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HubConnectionState } from '@microsoft/signalr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AddMessageCommandResponse } from 'src/app/models/AddMessageCommandResponse';
 import { GetMyChatGroupDetailResponse } from 'src/app/models/GetMyChatGroupDetailResponse';
 import { GetUserInfoResponse } from 'src/app/models/GetUserInfoResponse';
 import { ChatGroupService } from 'src/app/services/chat-group.service';
+import { SignalRService } from 'src/app/services/signal-r.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class HomeComponent implements OnInit {
     private readonly userService:UserService,
     private readonly spinner:NgxSpinnerService,
     private readonly chatGroupService:ChatGroupService,
-    private readonly fb:FormBuilder
+    private readonly fb:FormBuilder,
+    private readonly signalRService:SignalRService
     ) { }
 
   addGroupForm:FormGroup = null as any
@@ -34,10 +37,16 @@ export class HomeComponent implements OnInit {
     this.chatGroup = await this.chatGroupService.getMyChatGroups(()=>({}),()=>({}));
 
     this.userDetail = await this.userService.getUserInfo(
-      ()=>this.spinner.hide()
-      );
+      ()=>{
+        this.spinner.hide();
+      });
     console.log(this.userDetail)
     console.log(this.chatGroup)
+
+    await this.signalRService.start()
+    const _connection = this.signalRService.connection;
+    _connection.invoke("login",this.userDetail.userName) //login oldugunda servera haber ettik
+   
   }
 
   createGroupForm(){

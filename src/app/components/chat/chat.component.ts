@@ -7,6 +7,7 @@ import { GetMessagesQueryResponse } from 'src/app/models/GetMessagesQueryRespons
 import { GetMyChatGroupDetailResponse } from 'src/app/models/GetMyChatGroupDetailResponse';
 import { ChatGroupService } from 'src/app/services/chat-group.service';
 import { MessageService } from 'src/app/services/message.service';
+import { SignalRService } from 'src/app/services/signal-r.service';
 
 @Component({
   selector: 'app-chat',
@@ -24,7 +25,8 @@ export class ChatComponent implements OnInit {
   constructor(
     private readonly route:ActivatedRoute,
     private readonly chatGroupService:ChatGroupService,
-    private readonly messageService:MessageService
+    private readonly messageService:MessageService,
+    private readonly signalRService:SignalRService
     ) {}
 
   async ngOnInit() {
@@ -65,8 +67,22 @@ export class ChatComponent implements OnInit {
       if(!result.isSucceded){
         console.log(result.message)
       }
+
+      const _connection = this.signalRService.connection;
+
+      _connection.on("receiveMessage",message=>{
+        debugger;
+        console.log(message)
+      })
+      // _connection.invoke("SendMessage",(message.value,this.chatId));
+
+      // _connection.on("receiveMessage",(messageContent,date)=>{
+      //   console.log(messageContent,date);
+      // });
+
       message.value = ""
       console.log("mesaj yolandi")
+
     }
 
   }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UserLoginResponse } from 'src/app/models/UserLoginResponse';
+import { SignalRService } from 'src/app/services/signal-r.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
     private formBuilder:FormBuilder,
     private readonly userService:UserService,
     private readonly spinner:NgxSpinnerService,
-    private readonly router:Router
+    private readonly router:Router,
+    private readonly signalRSerivce:SignalRService
     ) { }
 
   registerForm! : FormGroup;
@@ -83,7 +85,6 @@ export class LoginComponent implements OnInit {
         if(result.message == null){
           localStorage.setItem("_T",result.accessToken.token)
           this.router.navigate(["/"])
-          
         }
         else{
           console.log(result.message)

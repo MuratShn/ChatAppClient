@@ -8,17 +8,21 @@ import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 export class SignalRService {
 
   private _connection:HubConnection= null as any;
-  
-  start(){
+
+  get connection(): HubConnection {
+    return this._connection;
+  }
+
+  async start(){
     if(!this._connection || this._connection?.state == HubConnectionState.Disconnected){
       const hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl("http://localhost:7183/hubs",{
+      .withUrl("https://localhost:7183/chatHub",{
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets}
         )
       .withAutomaticReconnect()
       .build();
-      hubConnection.start()
+      await hubConnection.start()
       .then(()=>{
         console.log("Bağlantı gerçekleştirildi")
       })
