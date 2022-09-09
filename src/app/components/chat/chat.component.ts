@@ -30,6 +30,16 @@ export class ChatComponent implements OnInit {
     ) {}
 
   async ngOnInit() {
+    console.log("test init")
+
+    await this.signalRService.start();
+    const _connection = this.signalRService.connection;
+
+    _connection.on("receiveMessage",(message:GetMessagesDto)=>{
+      console.log("girdi",_connection)
+      this.Messages.messages.push(message)
+    })
+
     this.route.params.subscribe(x=>{
       this.chatId = x["id"]
       this.getGroupDetail(this.chatId!)
@@ -68,12 +78,7 @@ export class ChatComponent implements OnInit {
         console.log(result.message)
       }
 
-      const _connection = this.signalRService.connection;
-
-      _connection.on("receiveMessage",message=>{
-        debugger;
-        console.log(message)
-      })
+     
       // _connection.invoke("SendMessage",(message.value,this.chatId));
 
       // _connection.on("receiveMessage",(messageContent,date)=>{

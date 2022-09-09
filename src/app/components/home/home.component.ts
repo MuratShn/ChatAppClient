@@ -31,21 +31,27 @@ export class HomeComponent implements OnInit {
 
 
   async ngOnInit(){
+    console.log("test init")
     this.createGroupForm();
     this.spinner.show();
-
-    this.chatGroup = await this.chatGroupService.getMyChatGroups(()=>({}),()=>({}));
-
+   
+    await this.signalRService.start()
+    
     this.userDetail = await this.userService.getUserInfo(
       ()=>{
-        this.spinner.hide();
+       
       });
-    console.log(this.userDetail)
-    console.log(this.chatGroup)
 
-    await this.signalRService.start()
     const _connection = this.signalRService.connection;
     _connection.invoke("login",this.userDetail.userName) //login oldugunda servera haber ettik
+
+    this.chatGroup = await this.chatGroupService.getMyChatGroups(
+      ()=>{ 
+      this.spinner.hide();}
+      ,()=>({}));
+
+    console.log(this.userDetail)
+    console.log(this.chatGroup)
    
   }
 
