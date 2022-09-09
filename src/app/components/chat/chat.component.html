@@ -46,7 +46,7 @@
 
 </style>
 
-<div class="row" id="chatComponent" style="height: 100%;">
+<div class="row" id="chatComponent">
     
     <div *ngIf="ChatGroupDetail">
 
@@ -61,38 +61,40 @@
             </div> 
         </div>
 
-        <div class="messages" *ngIf="Messages" style="padding-left:20px;padding-right: 20px;">
+        <div class="row" style="height:100vh;max-height: 87vh;">
+            <div class="messages scroll" *ngIf="Messages" style="padding-left:20px;padding-right: 20px;">
 
-            <div  *ngFor="let item of Messages.messages">
-
-                <div class="message" style="text-align: right;"> <!--Benim Mesajlar-->
-
-                    <div *ngIf="item.senderUserName == Messages.myUserName"> 
-                        {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span>
+                <div  *ngFor="let item of Messages.messages">
+    
+                    <div class="message" style="text-align: right;"> <!--Benim Mesajlar-->
+    
+                        <div *ngIf="item.senderUserName == Messages.myUserName"> 
+                            {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span>
+                        </div>
+    
                     </div>
-
-                </div>
-
-                <div class="message"><!--Diğer Kişilerin Mesajlar-->
-                    <div *ngIf="item.senderUserName != Messages.myUserName"> 
-                        <span class="userName">{{item.senderUserName}}</span> {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span> 
+    
+                    <div class="message"><!--Diğer Kişilerin Mesajlar-->
+                        <div *ngIf="item.senderUserName != Messages.myUserName"> 
+                            <span class="userName">{{item.senderUserName}}</span> {{item.messageContent}} <span class="message-time">{{item.messageTime | date:'shortTime' }}</span> 
+                        </div>
                     </div>
+    
                 </div>
-
+    
+                            <!-- <div class="message"><div> <span >Murat</span> Merhaba 1 <span class="message-time">20:55</span></div></div>
+                            <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div></div>
+                            <div class="message"> <div>Naber 1 <span class="message-time">20:55</span></div> </div>
+                            <div class="message"> <div>Nasıl Gidyor 1 <span class="message-time">20:55</span></div> </div>
+                            <div class="message"><div>Merhaba 1 <span class="message-time">20:55</span></div></div>
+                            <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div></div>  
+                            -->
+            
             </div>
-
-                        <!-- <div class="message"><div> <span >Murat</span> Merhaba 1 <span class="message-time">20:55</span></div></div>
-                        <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div></div>
-                        <div class="message"> <div>Naber 1 <span class="message-time">20:55</span></div> </div>
-                        <div class="message"> <div>Nasıl Gidyor 1 <span class="message-time">20:55</span></div> </div>
-                        <div class="message"><div>Merhaba 1 <span class="message-time">20:55</span></div></div>
-                        <div class="message" style="text-align: right;"><div>Merhaba 2 <br/>weqeqw <span class="message-time">20:55</span></div></div>  
-                        -->
-        
         </div>
 
     </div>
-            
+
     <div class="sendMessage" >
         <div class="row">
         

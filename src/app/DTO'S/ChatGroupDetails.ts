@@ -4,5 +4,5 @@ export interface ChatGroupDetails{
     chatDescription:string
     chatPhoto:string
     lastMessage:string
-    lastMessageDate:string
+    lastMessageDate:Date
 }

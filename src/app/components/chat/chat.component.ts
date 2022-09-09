@@ -36,7 +36,6 @@ export class ChatComponent implements OnInit {
     const _connection = this.signalRService.connection;
 
     _connection.on("receiveMessage",(message:GetMessagesDto)=>{
-      console.log("girdi",_connection)
       this.Messages.messages.push(message)
     })
 

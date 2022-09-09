@@ -51,7 +51,7 @@
 
 <div class="row" style="height: 100vh;">
   
-    <div class="col-md-4">
+    <div class="col-md-4 scroll" >
                     
         <div class="row">
             <div style="background-color: #202c33;">
@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="col-2 Group-LastDate">
-                        16:25
+                        {{item.lastMessageDate | date:'shortTime' }}
                         <br>
                         <!-- 1  okunmamıs mesaj adedı--> 
                     </div>
@@ -98,7 +98,7 @@
                     <hr>
 
                 </div>
-                
+<!--                 
                 <div class="row Chat-Groups">
                     <div class="col-2"><img src="../../../assets/UserPhoto-removebg-preview.png"  style="height: 65px;margin-top: 5px;margin-left: -15px;" alt=""></div>
                     <div class="col-8">
@@ -110,10 +110,11 @@
                     <div class="col-2 Group-LastDate">
                         16:25
                         <br>
-                        <!-- 1  okunmamıs mesaj adedı--> 
+                             okunmamıs mesaj adedı
                     </div>
                     <hr>
-                </div>
+                </div> >
+                 -->
 
             </div>
         </div>    
@@ -121,7 +122,7 @@
     </div>
   
   
-    <div class="col-md-8" >
+    <div class="col-md-8">
    
             <router-outlet></router-outlet> <!--Mesahlar kısmı-->
     </div>

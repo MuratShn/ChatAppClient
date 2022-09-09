@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HubConnectionState } from '@microsoft/signalr';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { AddMessageCommandResponse } from 'src/app/models/AddMessageCommandResponse';
+import { UpdateGroupDto } from 'src/app/DTO\'S/UpdateGroupDto';
 import { GetMyChatGroupDetailResponse } from 'src/app/models/GetMyChatGroupDetailResponse';
 import { GetUserInfoResponse } from 'src/app/models/GetUserInfoResponse';
 import { ChatGroupService } from 'src/app/services/chat-group.service';
@@ -34,22 +33,34 @@ export class HomeComponent implements OnInit {
     console.log("test init")
     this.createGroupForm();
     this.spinner.show();
-   
-    await this.signalRService.start()
+
     
     this.userDetail = await this.userService.getUserInfo(
       ()=>{
        
       });
 
-    const _connection = this.signalRService.connection;
-    _connection.invoke("login",this.userDetail.userName) //login oldugunda servera haber ettik
-
     this.chatGroup = await this.chatGroupService.getMyChatGroups(
       ()=>{ 
       this.spinner.hide();}
       ,()=>({}));
+        
+         
+    await this.signalRService.start()
+    const _connection = this.signalRService.connection;
+    _connection.invoke("login",this.userDetail.userName) //login oldugunda servera haber ettik
 
+    _connection.on("updateGroupPosition",(data:UpdateGroupDto)=>{
+      let chat = this.chatGroup.chatGroupDetails.find(x=>x.id == data.chatId)
+      
+      chat!.lastMessage = data.message
+      chat!.lastMessageDate=data.messageDate
+
+      this.chatGroup.chatGroupDetails.splice(this.chatGroup.chatGroupDetails.indexOf(chat!),1) //sort yerine o chatı silip en basa bidaha ekliyorum
+      this.chatGroup.chatGroupDetails.unshift(chat!)
+
+    })
+   
     console.log(this.userDetail)
     console.log(this.chatGroup)
    
