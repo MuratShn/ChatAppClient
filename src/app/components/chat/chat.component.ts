@@ -1,10 +1,9 @@
-import { COMPILER_OPTIONS, Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GetMessagesDto } from 'src/app/DTO\'S/GetMessagesDto';
 import { AddMessageCommandResponse } from 'src/app/models/AddMessageCommandResponse';
 import { GetChatDetailQueryResponse } from 'src/app/models/GetChatDetailQueryResponse';
 import { GetMessagesQueryResponse } from 'src/app/models/GetMessagesQueryResponse';
-import { GetMyChatGroupDetailResponse } from 'src/app/models/GetMyChatGroupDetailResponse';
 import { ChatGroupService } from 'src/app/services/chat-group.service';
 import { MessageService } from 'src/app/services/message.service';
 import { SignalRService } from 'src/app/services/signal-r.service';
@@ -26,10 +25,13 @@ export class ChatComponent implements OnInit {
     private readonly route:ActivatedRoute,
     private readonly chatGroupService:ChatGroupService,
     private readonly messageService:MessageService,
-    private readonly signalRService:SignalRService
+    private readonly signalRService:SignalRService,
     ) {}
 
+  
+    
   async ngOnInit() {
+
     console.log("test init")
 
     await this.signalRService.start();
@@ -43,9 +45,10 @@ export class ChatComponent implements OnInit {
       this.chatId = x["id"]
       this.getGroupDetail(this.chatId!)
       this.getMessages(this.chatId!);
+      this.delay(100).then(()=>{this.scrollBottom()});
     }) 
-    console.log("test")
-    console.log(this.ChatGroupDetail)
+
+    
   }
 
   async getGroupDetail(id:string){
@@ -55,8 +58,6 @@ export class ChatComponent implements OnInit {
 
   async getMessages(id:string){
     this.Messages = await this.messageService.GetMessages(id,()=>{},()=>{})
-    
-    console.log(this.Messages.messages)
     
     this.Messages.messages.forEach((x:GetMessagesDto) => {
       x.messageTime =  new Date(x.messageTime).toLocaleString("tr-TR")
@@ -71,7 +72,9 @@ export class ChatComponent implements OnInit {
     
     if(message.value.length > 0){
       console.log(this.chatId,message.value)
-      let result : AddMessageCommandResponse = await this.messageService.addMessage(this.chatId!,message.value,()=>{},()=>{})
+      let result : AddMessageCommandResponse = await this.messageService.addMessage(this.chatId!,message.value,()=>{
+        this.scrollBottom();
+      },()=>{})
       
       if(!result.isSucceded){
         console.log(result.message)
@@ -91,4 +94,21 @@ export class ChatComponent implements OnInit {
 
   }
 
+  onScroll($event:any){
+    const s = document.querySelector("#scroll")
+    if(s!.scrollTop <= 10){
+      //istek gidicek
+      console.log("ver hacı")
+    }
+  }
+
+  scrollBottom(){
+    const s = document.querySelector("#scroll")
+    s!.scrollTop! = s!.scrollHeight 
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
 }
+

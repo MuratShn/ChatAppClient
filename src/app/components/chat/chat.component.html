@@ -47,10 +47,8 @@
 </style>
 
 <div class="row" id="chatComponent">
-    
-    <div *ngIf="ChatGroupDetail">
 
-        <div class="row" style="background-color: #202c33;">
+        <div class="row" style="background-color: #202c33;"  *ngIf="ChatGroupDetail">
             <div style="padding: 10px 16px;height: 59px;">
                 <div style="cursor: pointer;display:inline" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                     <img *ngIf="ChatGroupDetail.chatPhoto == null" src="../../../assets/UserPhoto-removebg-preview.png "  style="height: 55px;margin-top: -10px;margin-left: -14px;" alt="">   
@@ -62,7 +60,7 @@
         </div>
 
         <div class="row" style="height:100vh;max-height: 87vh;">
-            <div class="messages scroll" *ngIf="Messages" style="padding-left:20px;padding-right: 20px;">
+            <div class="messages scroll" id="scroll" (scroll)="onScroll($event)" *ngIf="Messages" style="padding-left:20px;padding-right: 20px;">
 
                 <div  *ngFor="let item of Messages.messages">
     
@@ -93,7 +91,6 @@
             </div>
         </div>
 
-    </div>
 
     <div class="sendMessage" >
         <div class="row">
@@ -155,3 +152,4 @@
       </div>
     </div>
   </div>
+
