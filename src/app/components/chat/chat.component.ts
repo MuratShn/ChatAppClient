@@ -19,7 +19,8 @@ export class ChatComponent implements OnInit {
   ChatGroupDetail:GetChatDetailQueryResponse = null as any
   Messages : GetMessagesQueryResponse = null as any
   MyUserName : string = ""
-  
+  PageNo:number = 0;
+  LastHeight:number = 0
 
   constructor(
     private readonly route:ActivatedRoute,
@@ -41,10 +42,10 @@ export class ChatComponent implements OnInit {
       this.Messages.messages.push(message)
     })
 
-    this.route.params.subscribe(x=>{
+    this.route.params.subscribe(async x=>{
       this.chatId = x["id"]
-      this.getGroupDetail(this.chatId!)
-      this.getMessages(this.chatId!);
+      await this.getGroupDetail(this.chatId!)
+      await this.getMessages(this.chatId!);
       this.delay(100).then(()=>{this.scrollBottom()});
     }) 
 
@@ -57,13 +58,13 @@ export class ChatComponent implements OnInit {
   }
 
   async getMessages(id:string){
-    this.Messages = await this.messageService.GetMessages(id,()=>{},()=>{})
+    this.Messages = await this.messageService.GetMessages(id,this.PageNo,()=>{},()=>{})
     
     this.Messages.messages.forEach((x:GetMessagesDto) => {
       x.messageTime =  new Date(x.messageTime).toLocaleString("tr-TR")
     });
 
-    this.Messages.messages.sort(x=>x.messageTime)
+    this.Messages.messages.reverse()
     this.MyUserName = this.Messages.myUserName;
   }
   
@@ -94,11 +95,20 @@ export class ChatComponent implements OnInit {
 
   }
 
-  onScroll($event:any){
+  async onScroll($event:any){
     const s = document.querySelector("#scroll")
-    if(s!.scrollTop <= 10){
-      //istek gidicek
-      console.log("ver hacı")
+    if(s!.scrollTop <= 1 && this.LastHeight != s?.scrollHeight){
+
+      this.LastHeight = s?.scrollHeight!;
+
+      this.PageNo += 1
+      let message= await this.messageService.GetMessages(this.chatId!,this.PageNo,()=>{},()=>{})
+
+      message.messages.forEach((x:any) => {
+        this.Messages.messages.unshift(x)  
+      });
+
+      s!.scrollTop = 20;
     }
   }
 

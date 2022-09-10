@@ -12,10 +12,10 @@ export class MessageService {
   baseUrl:string = "https://localhost:7183/api/"
 
   
-  async GetMessages(chatId:string,successCallBack?:()=>void,errorCallBack?:(message:string)=>void){
+  async GetMessages(chatId:string,page:number,successCallBack?:()=>void,errorCallBack?:(message:string)=>void){
     let newUrl = this.baseUrl + "Message/getMessages"
 
-    let data : Promise<GetMessagesQueryResponse> | any = this.httpClient.get(newUrl,{params:{ChatId:chatId}}).toPromise();
+    let data : Promise<GetMessagesQueryResponse> | any = this.httpClient.get(newUrl,{params:{ChatId:chatId,Page:page}}).toPromise();
     
     data
     .then(  () => successCallBack!())
